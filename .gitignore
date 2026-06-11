@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+/frontend/node_modules
+/backend/node_modules
+
+# Production Build
+/frontend/dist
+/frontend/build
+/backend/dist
+
+# Env variables
+.env
+*.env
+/backend/.env
+/frontend/.env
+
+# Editor / System files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
