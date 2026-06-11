@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { CartProvider } from './context/CartProvider'; // Wait, let's verify if the file is CartContext.jsx. Yes, context file is CartContext.jsx, let's import from './context/CartContext' instead of CartProvider!
-import { CartProvider as CustomCartProvider } from './context/CartContext';
+import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ProductDetails from './pages/ProductDetails';
@@ -16,7 +15,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 function App() {
   return (
     <AuthProvider>
-      <CustomCartProvider>
+      <CartProvider>
         <Router>
           <div className="flex flex-col min-h-screen">
             {/* Header / Navbar */}
@@ -71,7 +70,7 @@ function App() {
             </footer>
           </div>
         </Router>
-      </CustomCartProvider>
+      </CartProvider>
     </AuthProvider>
   );
 }
