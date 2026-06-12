@@ -51,6 +51,7 @@ const addOrderItems = async (req, res) => {
       paymentStatus: paymentResult && paymentResult.status === 'succeeded' ? 'Paid' : 'Pending',
       paidAt: paymentResult && paymentResult.status === 'succeeded' ? Date.now() : undefined,
       paymentResult: paymentResult || undefined,
+      couponApplied: req.body.couponApplied || undefined,
     });
 
     const createdOrder = await order.save();

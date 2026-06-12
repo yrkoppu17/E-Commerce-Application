@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { ToastProvider } from './context/ToastContext';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ProductDetails from './pages/ProductDetails';
@@ -10,14 +11,17 @@ import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import MyOrders from './pages/MyOrders';
 import AdminDashboard from './pages/AdminDashboard';
+import Wishlist from './pages/Wishlist';
+import ProfileDashboard from './pages/ProfileDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
     <AuthProvider>
-      <CartProvider>
-        <Router>
-          <div className="flex flex-col min-h-screen">
+      <ToastProvider>
+        <CartProvider>
+          <Router>
+            <div className="flex flex-col min-h-screen">
             {/* Header / Navbar */}
             <Navbar />
 
@@ -47,6 +51,22 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+                <Route
+                  path="/wishlist"
+                  element={
+                    <ProtectedRoute>
+                      <Wishlist />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <ProfileDashboard />
+                    </ProtectedRoute>
+                  }
+                />
 
                 {/* Protected Administrative Routes */}
                 <Route
@@ -70,7 +90,8 @@ function App() {
             </footer>
           </div>
         </Router>
-      </CartProvider>
+        </CartProvider>
+      </ToastProvider>
     </AuthProvider>
   );
 }

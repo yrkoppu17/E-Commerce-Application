@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-[#F5F5F7] text-[#1D1D1F] font-sans antialiased;
+    @apply bg-[#F5F5F7] text-[#1D1D1F] dark:bg-dark-bg dark:text-dark-text font-sans antialiased;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 }

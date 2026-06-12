@@ -6,23 +6,76 @@ import Review from '../models/Review.js';
 // @access  Public
 const getProducts = async (req, res) => {
   try {
-    const keyword = req.query.keyword
-      ? {
-          name: {
-            $regex: req.query.keyword,
-            $options: 'i',
-          },
-        }
-      : {};
+    const queryObj = {};
 
-    const category = req.query.category ? { category: req.query.category } : {};
+    // 1. Keyword search (with simple regex)
+    if (req.query.keyword) {
+      queryObj.name = {
+        $regex: req.query.keyword,
+        $options: 'i',
+      };
+    }
 
-    // Combine filters
-    const products = await Product.find({ ...keyword, ...category });
+    // 2. Category filter
+    if (req.query.category && req.query.category !== 'All' && req.query.category !== '') {
+      queryObj.category = req.query.category;
+    }
+
+    // 3. Brand filter
+    if (req.query.brand) {
+      const brands = req.query.brand.split(',');
+      queryObj.brand = { $in: brands };
+    }
+
+    // 4. Price range filter
+    if (req.query.priceMin || req.query.priceMax) {
+      queryObj.price = {};
+      if (req.query.priceMin) queryObj.price.$gte = Number(req.query.priceMin);
+      if (req.query.priceMax) queryObj.price.$lte = Number(req.query.priceMax);
+    }
+
+    // 5. Ratings filter
+    if (req.query.ratingMin) {
+      queryObj.averageRating = { $gte: Number(req.query.ratingMin) };
+    }
+
+    // 6. Availability filter
+    if (req.query.availability) {
+      if (req.query.availability === 'inStock') {
+        queryObj.stockQuantity = { $gt: 0 };
+      } else if (req.query.availability === 'outOfStock') {
+        queryObj.stockQuantity = { $eq: 0 };
+      }
+    }
+
+    // 7. Discount filter
+    if (req.query.discounted === 'true') {
+      queryObj.discountPercent = { $gt: 0 };
+    }
+
+    // 8. Deal sections filter
+    if (req.query.dealType && req.query.dealType !== 'None') {
+      queryObj.dealType = req.query.dealType;
+    }
+
+    // Sort setup
+    let sortObj = {};
+    if (req.query.sort) {
+      const sortVal = req.query.sort;
+      if (sortVal === 'price-asc') sortObj.price = 1;
+      else if (sortVal === 'price-desc') sortObj.price = -1;
+      else if (sortVal === 'newest') sortObj.createdAt = -1;
+      else if (sortVal === 'rating') sortObj.averageRating = -1;
+      else if (sortVal === 'popular') sortObj.numReviews = -1;
+      else if (sortVal === 'best-selling') sortObj.averageRating = -1; // Default
+    } else {
+      sortObj.createdAt = -1; // default sort
+    }
+
+    const products = await Product.find(queryObj).sort(sortObj);
     res.json(products);
   } catch (error) {
-    res.status(500);
-    res.json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -129,7 +182,7 @@ const updateProduct = async (req, res) => {
 // @access  Private
 const createProductReview = async (req, res) => {
   try {
-    const { rating, comment } = req.body;
+    const { rating, comment, images } = req.body;
 
     const product = await Product.findById(req.params.id);
 
@@ -145,10 +198,20 @@ const createProductReview = async (req, res) => {
         return;
       }
 
+      // Check if verified purchase
+      const Order = (await import('../models/Order.js')).default;
+      const hasPurchased = await Order.findOne({
+        user: req.user._id,
+        paymentStatus: 'Paid',
+        'orderItems.product': req.params.id
+      });
+
       const review = new Review({
         name: req.user.name,
         rating: Number(rating),
         comment,
+        images: images || [],
+        isVerified: !!hasPurchased,
         user: req.user._id,
         product: req.params.id,
       });
@@ -174,6 +237,85 @@ const createProductReview = async (req, res) => {
   }
 };
 
+// @desc    Get autocomplete search suggestions
+// @route   GET /api/products/suggestions
+// @access  Public
+const getProductSuggestions = async (req, res) => {
+  try {
+    const keyword = req.query.keyword;
+    if (!keyword) {
+      return res.json([]);
+    }
+
+    // Suggestions based on name containing the string
+    const suggestions = await Product.find({
+      name: { $regex: keyword, $options: 'i' }
+    })
+      .select('name category')
+      .limit(10);
+
+    res.json(suggestions);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Get related / recommended products
+// @route   GET /api/products/:id/related
+// @access  Public
+const getRelatedProducts = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Find products in same category, excluding current product
+    const related = await Product.find({
+      category: product.category,
+      _id: { $ne: product._id }
+    }).limit(8);
+
+    res.json(related);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Helpful vote review
+// @route   POST /api/products/:id/reviews/:reviewId/vote
+// @access  Private
+const voteHelpfulReview = async (req, res) => {
+  try {
+    const review = await Review.findById(req.params.reviewId);
+    if (!review) {
+      return res.status(404).json({ message: 'Review not found' });
+    }
+
+    const userId = req.user._id;
+
+    // Check if user already voted
+    const alreadyVotedIdx = review.votedUsers.findIndex(
+      (id) => id.toString() === userId.toString()
+    );
+
+    if (alreadyVotedIdx !== -1) {
+      // Remove vote (toggle off)
+      review.votedUsers.splice(alreadyVotedIdx, 1);
+      review.helpfulVotes = Math.max(0, review.helpfulVotes - 1);
+    } else {
+      // Add vote
+      review.votedUsers.push(userId);
+      review.helpfulVotes += 1;
+    }
+
+    await review.save();
+    res.json({ helpfulVotes: review.helpfulVotes });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export {
   getProducts,
   getProductById,
@@ -181,4 +323,7 @@ export {
   createProduct,
   updateProduct,
   createProductReview,
+  getProductSuggestions,
+  getRelatedProducts,
+  voteHelpfulReview,
 };

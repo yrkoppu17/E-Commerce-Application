@@ -54,11 +54,15 @@ const orderSchema = mongoose.Schema(
     deliveryStatus: {
       type: String,
       required: true,
-      enum: ['Processing', 'Shipped', 'Delivered'],
+      enum: ['Processing', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered'],
       default: 'Processing',
     },
     deliveredAt: {
       type: Date,
+    },
+    couponApplied: {
+      code: { type: String, default: '' },
+      discountAmount: { type: Number, default: 0 },
     },
   },
   {

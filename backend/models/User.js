@@ -16,11 +16,25 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    address: {
-      street: { type: String, default: '' },
-      city: { type: String, default: '' },
-      postalCode: { type: String, default: '' },
-      country: { type: String, default: '' },
+    addresses: [
+      {
+        label: { type: String, default: 'Home' }, // Home, Office, etc.
+        name: { type: String, default: '' },
+        street: { type: String, default: '' },
+        city: { type: String, default: '' },
+        postalCode: { type: String, default: '' },
+        country: { type: String, default: '' },
+      }
+    ],
+    wishlist: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+      }
+    ],
+    isBlocked: {
+      type: Boolean,
+      default: false,
     },
     role: {
       type: String,
@@ -42,7 +56,7 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 // Encrypt password before saving
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
-    next();
+    return next();
   }
 
   const salt = await bcrypt.genSalt(10);

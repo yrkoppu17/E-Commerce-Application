@@ -15,9 +15,21 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0.0,
     },
+    originalPrice: {
+      type: Number,
+      default: 0.0,
+    },
+    discountPercent: {
+      type: Number,
+      default: 0,
+    },
     category: {
       type: String,
       required: true,
+    },
+    brand: {
+      type: String,
+      default: '',
     },
     stockQuantity: {
       type: Number,
@@ -39,6 +51,59 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    sizes: {
+      type: [String],
+      default: [],
+    },
+    colors: {
+      type: [String],
+      default: [],
+    },
+    storage: {
+      type: [String],
+      default: [],
+    },
+    weight: {
+      type: [String],
+      default: [],
+    },
+    variants: [
+      {
+        size: { type: String, default: '' },
+        color: { type: String, default: '' },
+        storage: { type: String, default: '' },
+        weight: { type: String, default: '' },
+        stockQuantity: { type: Number, default: 0 },
+        price: { type: Number, default: 0 },
+      }
+    ],
+    isFeatured: {
+      type: Boolean,
+      default: false,
+    },
+    isTrending: {
+      type: Boolean,
+      default: false,
+    },
+    isBestSeller: {
+      type: Boolean,
+      default: false,
+    },
+    isNewArrival: {
+      type: Boolean,
+      default: false,
+    },
+    dealType: {
+      type: String,
+      enum: ['None', 'TodaysDeals', 'BestDeals', 'MegaSale', 'WeekendOffers', 'ClearanceSale'],
+      default: 'None',
+    },
+    frequentlyBoughtTogether: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+      }
+    ],
   },
   {
     timestamps: true,
