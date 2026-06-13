@@ -15,7 +15,7 @@ import {
   Filler,
 } from 'chart.js';
 import {
-  DollarSign,
+  IndianRupee,
   Package,
   ShoppingCart,
   Users,
@@ -347,7 +347,7 @@ const AdminDashboard = () => {
       labels: salesAnalytics.months,
       datasets: [
         {
-          label: 'Revenue ($)',
+          label: 'Revenue (₹)',
           data: salesAnalytics.salesData,
           fill: false,
           borderColor: 'rgb(99, 102, 241)',
@@ -383,7 +383,7 @@ const AdminDashboard = () => {
       labels,
       datasets: [
         {
-          label: 'Sales Revenue by Category ($)',
+          label: 'Sales Revenue by Category (₹)',
           data,
           backgroundColor: [
             'rgba(99, 102, 241, 0.7)',
@@ -462,10 +462,10 @@ const AdminDashboard = () => {
             <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-750 shadow-sm flex items-center justify-between">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Gross Revenue</span>
-                <h3 className="text-2xl font-black text-slate-850 dark:text-slate-100">${totalSales.toFixed(2)}</h3>
+                <h3 className="text-2xl font-black text-slate-850 dark:text-slate-100">₹{totalSales.toFixed(2)}</h3>
               </div>
               <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/35 flex items-center justify-center text-emerald-600">
-                <DollarSign size={20} />
+                <IndianRupee size={20} />
               </div>
             </div>
 
@@ -543,7 +543,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="text-right">
                       <p className="font-bold text-slate-850 dark:text-slate-100">{p.quantitySold} Sold</p>
-                      <p className="text-[10px] text-slate-400">${p.revenueGenerated} Revenue</p>
+                      <p className="text-[10px] text-slate-400">₹{p.revenueGenerated} Revenue</p>
                     </div>
                   </div>
                 ))}
@@ -585,7 +585,7 @@ const AdminDashboard = () => {
                     return (
                       <tr key={p._id} className="hover:bg-slate-50/40">
                         <td className="p-4 font-bold text-slate-800 dark:text-slate-200">{p.name}</td>
-                        <td className="p-4 font-semibold">${p.price.toFixed(2)}</td>
+                        <td className="p-4 font-semibold">₹{p.price.toFixed(2)}</td>
                         <td className="p-4 text-xs font-bold text-slate-400">{p.category}</td>
                         <td className="p-4">
                           <span className={`font-extrabold ${
@@ -708,7 +708,7 @@ const AdminDashboard = () => {
                     <tr key={o._id} className="hover:bg-slate-50/40">
                       <td className="p-4 font-mono text-xs text-indigo-750">{o._id}</td>
                       <td className="p-4 font-bold text-slate-800 dark:text-slate-200">{o.user?.name || 'Guest'}</td>
-                      <td className="p-4 font-extrabold text-slate-700 dark:text-slate-205">${o.totalPrice.toFixed(2)}</td>
+                      <td className="p-4 font-extrabold text-slate-700 dark:text-slate-205">₹{o.totalPrice.toFixed(2)}</td>
                       <td className="p-4">
                         <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold border ${
                           o.paymentStatus === 'Paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-rose-50 text-rose-600 border-rose-100'
@@ -779,8 +779,8 @@ const AdminDashboard = () => {
                     <span className={`inline-block w-2.5 h-2.5 rounded-full ${c.isActive ? 'bg-emerald-500' : 'bg-red-500'}`} />
                   </h4>
                   
-                  <p>Discount: <span className="text-slate-750 font-bold">{c.discountValue}{c.discountType === 'Percentage' ? '%' : '$'} Off</span></p>
-                  <p>Min Purchase: <span className="text-slate-700 font-bold">${c.minPurchaseAmount}</span></p>
+                  <p>Discount: <span className="text-slate-750 font-bold">{c.discountValue}{c.discountType === 'Percentage' ? '%' : '₹'} Off</span></p>
+                  <p>Min Purchase: <span className="text-slate-700 font-bold">₹{c.minPurchaseAmount}</span></p>
                   <p className="flex items-center gap-1">
                     <Calendar size={11} />
                     <span>Expires: {new Date(c.expiryDate).toLocaleDateString()}</span>
@@ -915,7 +915,7 @@ const AdminDashboard = () => {
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest mb-1.5">Price ($)</label>
+                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest mb-1.5">Price (₹)</label>
                   <input
                     type="number"
                     step="0.01"
@@ -1044,7 +1044,7 @@ const AdminDashboard = () => {
                     className="w-full bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-xl p-3 outline-none"
                   >
                     <option value="Percentage">Percentage (%)</option>
-                    <option value="Flat">Flat Cash ($)</option>
+                    <option value="Flat">Flat Cash (₹)</option>
                   </select>
                 </div>
                 <div>
@@ -1139,13 +1139,13 @@ const AdminDashboard = () => {
                       {order.orderItems.map((item, i) => (
                         <div key={i} className="flex justify-between">
                           <span>{item.name} (x{item.qty})</span>
-                          <span className="font-bold">${(item.price * item.qty).toFixed(2)}</span>
+                          <span className="font-bold">₹{(item.price * item.qty).toFixed(2)}</span>
                         </div>
                       ))}
                     </div>
                     <div className="border-t pt-2 flex justify-between font-extrabold text-slate-800 dark:text-slate-150">
                       <span>Total Amount Paid</span>
-                      <span>${order.totalPrice.toFixed(2)}</span>
+                      <span>₹{order.totalPrice.toFixed(2)}</span>
                     </div>
                   </div>
                 ))

@@ -421,7 +421,7 @@ const ProfileDashboard = () => {
                             </div>
                             <div>
                               <p className="text-[10px] text-slate-400 uppercase">Total Amount</p>
-                              <p className="text-slate-800 dark:text-slate-200 font-extrabold">${order.totalPrice.toFixed(2)}</p>
+                              <p className="text-slate-800 dark:text-slate-200 font-extrabold">₹{order.totalPrice.toFixed(2)}</p>
                             </div>
                             {order.couponApplied?.code && (
                               <div className="bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 px-2 py-0.5 rounded border border-emerald-100 text-[10px] uppercase font-bold">
@@ -444,10 +444,10 @@ const ProfileDashboard = () => {
                                 <img src={item.image} alt="" className="w-12 h-12 object-contain bg-white rounded-xl border p-1" />
                                 <div>
                                   <h4 className="font-extrabold text-slate-800 dark:text-slate-200 text-sm truncate max-w-sm">{item.name}</h4>
-                                  <p className="text-slate-450 font-bold mt-0.5">Qty: {item.qty} &bull; ${item.price.toFixed(2)}</p>
+                                  <p className="text-slate-450 font-bold mt-0.5">Qty: {item.qty} &bull; ₹{item.price.toFixed(2)}</p>
                                 </div>
                               </div>
-                              <span className="text-slate-800 dark:text-slate-100 font-extrabold">${(item.price * item.qty).toFixed(2)}</span>
+                              <span className="text-slate-800 dark:text-slate-100 font-extrabold">₹{(item.price * item.qty).toFixed(2)}</span>
                             </div>
                           ))}
                         </div>

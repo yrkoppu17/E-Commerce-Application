@@ -85,13 +85,13 @@ const MyOrders = () => {
       <tr>
         <td style="padding: 10px; border-bottom: 1px solid #ddd;">${item.name}</td>
         <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;">${item.qty}</td>
-        <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right;">$${item.price.toFixed(2)}</td>
-        <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right;">$${(item.qty * item.price).toFixed(2)}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right;">₹${item.price.toFixed(2)}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right;">₹${(item.qty * item.price).toFixed(2)}</td>
       </tr>
     `).join('');
 
     const discountHtml = order.couponApplied?.code 
-      ? `<p style="text-align: right; margin: 5px 0;"><strong>Coupon (${order.couponApplied.code}):</strong> -$${order.couponApplied.discountAmount.toFixed(2)}</p>` 
+      ? `<p style="text-align: right; margin: 5px 0;"><strong>Coupon (${order.couponApplied.code}):</strong> -₹${order.couponApplied.discountAmount.toFixed(2)}</p>` 
       : '';
 
     printWindow.document.write(`
@@ -151,9 +151,9 @@ const MyOrders = () => {
           </table>
 
           <div class="total-box">
-            <p style="margin: 5px 0;"><strong>Subtotal:</strong> $${(order.totalPrice + (order.couponApplied?.discountAmount || 0)).toFixed(2)}</p>
+            <p style="margin: 5px 0;"><strong>Subtotal:</strong> ₹${(order.totalPrice + (order.couponApplied?.discountAmount || 0)).toFixed(2)}</p>
             ${discountHtml}
-            <h2 style="margin: 10px 0 0 0; color: #1e1b4b;">Total Paid: $${order.totalPrice.toFixed(2)}</h2>
+            <h2 style="margin: 10px 0 0 0; color: #1e1b4b;">Total Paid: ₹${order.totalPrice.toFixed(2)}</h2>
           </div>
 
           <div style="margin-top: 80px; text-align: center; font-size: 11px; color: #999; border-top: 1px solid #eee; padding-top: 20px;">
@@ -424,7 +424,7 @@ const MyOrders = () => {
                       {/* Price tag */}
                       <div className="text-right">
                         <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-wider block font-semibold">Total Invoice</span>
-                        <span className="text-lg font-black text-slate-900 dark:text-white">${order.totalPrice.toFixed(2)}</span>
+                        <span className="text-lg font-black text-slate-900 dark:text-white">₹{order.totalPrice.toFixed(2)}</span>
                       </div>
 
                       {/* Payment Status Badging */}
@@ -557,14 +557,14 @@ const MyOrders = () => {
                                     {item.name}
                                   </Link>
                                   <div className="flex items-center gap-2 text-xs font-medium text-slate-450">
-                                    <span>Price: ${item.price.toFixed(2)}</span>
+                                    <span>Price: ₹{item.price.toFixed(2)}</span>
                                     <span>&bull;</span>
                                     <span>Qty: {item.qty}</span>
                                   </div>
                                 </div>
                               </div>
                               <span className="font-extrabold text-sm text-slate-850 dark:text-slate-100">
-                                ${(item.price * item.qty).toFixed(2)}
+                                ₹{(item.price * item.qty).toFixed(2)}
                               </span>
                             </div>
                           ))}
@@ -643,7 +643,7 @@ const MyOrders = () => {
                           <div className="text-xs space-y-2 font-semibold">
                             <div className="flex justify-between text-slate-500">
                               <span>Subtotal:</span>
-                              <span>${(order.totalPrice + (order.couponApplied?.discountAmount || 0)).toFixed(2)}</span>
+                              <span>₹{(order.totalPrice + (order.couponApplied?.discountAmount || 0)).toFixed(2)}</span>
                             </div>
 
                             {order.couponApplied?.code && (
@@ -652,7 +652,7 @@ const MyOrders = () => {
                                   <span>Coupon Discount:</span>
                                   <span className="text-[10px] font-bold uppercase">[{order.couponApplied.code}]</span>
                                 </span>
-                                <span>-${order.couponApplied.discountAmount.toFixed(2)}</span>
+                                <span>-₹{order.couponApplied.discountAmount.toFixed(2)}</span>
                               </div>
                             )}
 
@@ -665,7 +665,7 @@ const MyOrders = () => {
 
                             <div className="flex justify-between text-sm pt-1">
                               <span className="font-extrabold text-slate-900 dark:text-white">Amount Charged:</span>
-                              <span className="font-black text-slate-900 dark:text-white">${order.totalPrice.toFixed(2)}</span>
+                              <span className="font-black text-slate-900 dark:text-white">₹{order.totalPrice.toFixed(2)}</span>
                             </div>
                           </div>
                         </div>

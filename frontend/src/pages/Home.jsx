@@ -404,11 +404,11 @@ const Home = () => {
               <div className="flex items-center space-x-4">
                 <div className="bg-white/10 border border-white/10 px-4 py-2.5 rounded-2xl">
                   <p className="text-[10px] text-slate-300 font-bold uppercase tracking-wider">Before</p>
-                  <p className="text-sm font-semibold line-through text-slate-200">${flashSaleProduct.originalPrice?.toFixed(2)}</p>
+                  <p className="text-sm font-semibold line-through text-slate-200">₹{flashSaleProduct.originalPrice?.toFixed(2)}</p>
                 </div>
                 <div className="bg-white/20 border border-white/25 px-5 py-2.5 rounded-2xl shadow-inner">
                   <p className="text-[10px] text-amber-300 font-bold uppercase tracking-wider">Flash Sale Price</p>
-                  <p className="text-2xl font-extrabold text-amber-400">${flashSaleProduct.price.toFixed(2)}</p>
+                  <p className="text-2xl font-extrabold text-amber-400">₹{flashSaleProduct.price.toFixed(2)}</p>
                 </div>
               </div>
 
@@ -592,7 +592,7 @@ const Home = () => {
             <div>
               <div className="flex justify-between items-center mb-2">
                 <label className="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Max Price</label>
-                <span className="text-xs font-bold text-slate-750 dark:text-slate-250">${priceMax}</span>
+                <span className="text-xs font-bold text-slate-750 dark:text-slate-250">₹{priceMax}</span>
               </div>
               <input
                 type="range"

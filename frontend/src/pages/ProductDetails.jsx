@@ -388,12 +388,12 @@ const ProductDetails = () => {
           {/* Pricing */}
           <div className="border-t border-b border-slate-200/80 dark:border-slate-750 py-4 mb-6 flex items-baseline space-x-3">
             <span className="text-3xl font-black text-slate-800 dark:text-slate-100">
-              ${currentPrice.toFixed(2)}
+              ₹{currentPrice.toFixed(2)}
             </span>
             {product.discountPercent > 0 && (
               <>
                 <span className="text-slate-400 line-through font-bold text-lg">
-                  ${product.originalPrice?.toFixed(2)}
+                  ₹{product.originalPrice?.toFixed(2)}
                 </span>
                 <span className="text-xs bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-455 font-extrabold uppercase px-2.5 py-1 rounded-full">
                   {product.discountPercent}% OFF
@@ -601,7 +601,7 @@ const ProductDetails = () => {
                 <img src={getImageUrl(product.images[0])} alt="" className="w-12 h-12 object-contain" />
                 <div className="min-w-0">
                   <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">{product.name}</h4>
-                  <p className="text-sm font-extrabold text-slate-800 dark:text-slate-100 mt-0.5">${currentPrice.toFixed(2)}</p>
+                  <p className="text-sm font-extrabold text-slate-800 dark:text-slate-100 mt-0.5">₹{currentPrice.toFixed(2)}</p>
                 </div>
               </div>
 
@@ -612,7 +612,7 @@ const ProductDetails = () => {
                 <img src={getImageUrl(bundleProduct.images[0])} alt="" className="w-12 h-12 object-contain" />
                 <div className="min-w-0">
                   <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">{bundleProduct.name}</h4>
-                  <p className="text-sm font-extrabold text-slate-800 dark:text-slate-100 mt-0.5">${bundleProduct.price.toFixed(2)}</p>
+                  <p className="text-sm font-extrabold text-slate-800 dark:text-slate-100 mt-0.5">₹{bundleProduct.price.toFixed(2)}</p>
                 </div>
               </div>
             </div>
@@ -622,7 +622,7 @@ const ProductDetails = () => {
               <div>
                 <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Total Package Price</p>
                 <p className="text-2xl font-black text-slate-800 dark:text-slate-100 mt-0.5">
-                  ${(currentPrice + bundleProduct.price).toFixed(2)}
+                  ₹{(currentPrice + bundleProduct.price).toFixed(2)}
                 </p>
               </div>
               <button
@@ -661,7 +661,7 @@ const ProductDetails = () => {
                     <td className="p-4 font-bold text-slate-500 dark:text-slate-400">Price</td>
                     {compareList.map((item) => (
                       <td key={item._id} className="p-4 font-extrabold text-slate-800 dark:text-slate-150">
-                        ${item._id === product._id ? currentPrice.toFixed(2) : item.price.toFixed(2)}
+                        ₹{item._id === product._id ? currentPrice.toFixed(2) : item.price.toFixed(2)}
                       </td>
                     ))}
                   </tr>

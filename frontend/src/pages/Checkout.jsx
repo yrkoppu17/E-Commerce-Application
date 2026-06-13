@@ -462,10 +462,10 @@ const Checkout = () => {
                       <img src={getImageUrl(item.image)} alt="" className="w-12 h-12 object-contain bg-slate-50 border p-1 rounded-xl" />
                       <div>
                         <h4 className="font-extrabold text-slate-850 dark:text-slate-200 truncate max-w-sm">{item.name}</h4>
-                        <p className="text-slate-450 font-bold mt-0.5">Qty: {item.qty} &bull; ${item.price.toFixed(2)}</p>
+                        <p className="text-slate-450 font-bold mt-0.5">Qty: {item.qty} &bull; ₹{item.price.toFixed(2)}</p>
                       </div>
                     </div>
-                    <span className="font-extrabold text-slate-800 dark:text-slate-100 text-sm">${(item.price * item.qty).toFixed(2)}</span>
+                    <span className="font-extrabold text-slate-800 dark:text-slate-100 text-sm">₹{(item.price * item.qty).toFixed(2)}</span>
                   </div>
                 ))}
               </div>
@@ -492,7 +492,7 @@ const Checkout = () => {
                 
                 {appliedCoupon && (
                   <div className="bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 border border-emerald-150 p-2.5 rounded-xl flex items-center justify-between text-xs font-semibold w-fit">
-                    <span>Applied: {appliedCoupon.code} (-${appliedCoupon.discountAmount?.toFixed(2)})</span>
+                    <span>Applied: {appliedCoupon.code} (-₹{appliedCoupon.discountAmount?.toFixed(2)})</span>
                     <button type="button" onClick={() => setAppliedCoupon(null)} className="text-red-500 ml-4 font-bold">Remove</button>
                   </div>
                 )}
@@ -692,7 +692,7 @@ const Checkout = () => {
                     <div className="bg-white dark:bg-slate-800 border p-5 rounded-2xl border-slate-250 dark:border-slate-700 flex justify-between items-center shadow-sm">
                       <div>
                         <p className="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Available Wallet Balance</p>
-                        <p className="text-xl font-extrabold text-slate-850 dark:text-slate-100">${walletBalance.toFixed(2)}</p>
+                        <p className="text-xl font-extrabold text-slate-850 dark:text-slate-100">₹{walletBalance.toFixed(2)}</p>
                       </div>
                       {walletBalance < finalOrderPrice && (
                         <span className="text-[10px] bg-red-50 text-red-550 border border-red-150 px-2 py-0.5 rounded font-extrabold uppercase">
@@ -744,7 +744,7 @@ const Checkout = () => {
                       <span>Verifying simulation credentials...</span>
                     </>
                   ) : (
-                    <span>Confirm & Pay ${finalOrderPrice.toFixed(2)}</span>
+                    <span>Confirm & Pay ₹{finalOrderPrice.toFixed(2)}</span>
                   )}
                 </button>
               </div>
@@ -767,7 +767,7 @@ const Checkout = () => {
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Transaction Invoice</p>
                   <p className="text-xs text-slate-750 dark:text-slate-200">Order ID: <span className="font-mono text-indigo-650 dark:text-indigo-400 font-bold">{orderId}</span></p>
                   <p className="text-xs text-slate-750 dark:text-slate-200">Shipping Mode: <span className="font-bold text-slate-800 dark:text-slate-100">ShopEZ Standard Express (FREE)</span></p>
-                  <p className="text-xs text-slate-750 dark:text-slate-200">Amount Paid: <span className="font-extrabold text-slate-800 dark:text-slate-100">${finalOrderPrice.toFixed(2)}</span></p>
+                  <p className="text-xs text-slate-750 dark:text-slate-200">Amount Paid: <span className="font-extrabold text-slate-800 dark:text-slate-100">₹{finalOrderPrice.toFixed(2)}</span></p>
                 </div>
               </div>
 
@@ -807,7 +807,7 @@ const Checkout = () => {
                       {item.name} <span className="text-xs font-bold text-indigo-650">x{item.qty}</span>
                     </span>
                     <span className="font-extrabold text-slate-800 dark:text-slate-200 whitespace-nowrap">
-                      ${(item.price * item.qty).toFixed(2)}
+                      ₹{(item.price * item.qty).toFixed(2)}
                     </span>
                   </div>
                 ))}
@@ -821,13 +821,13 @@ const Checkout = () => {
                 {appliedCoupon && (
                   <div className="flex justify-between text-emerald-600 text-[11px]">
                     <span>Coupon: {appliedCoupon.code}</span>
-                    <span>-${appliedCoupon.discountAmount?.toFixed(2)}</span>
+                    <span>-₹{appliedCoupon.discountAmount?.toFixed(2)}</span>
                   </div>
                 )}
                 <div className="flex justify-between items-center text-sm border-t border-slate-100 dark:border-slate-750 pt-3">
                   <span className="text-slate-800 dark:text-slate-100 font-bold">Grand Total</span>
                   <span className="text-xl font-black text-indigo-650 dark:text-indigo-400">
-                    ${finalOrderPrice.toFixed(2)}
+                    ₹{finalOrderPrice.toFixed(2)}
                   </span>
                 </div>
               </div>

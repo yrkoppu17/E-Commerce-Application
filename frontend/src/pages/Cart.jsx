@@ -238,7 +238,7 @@ const Cart = () => {
                         {item.name}
                       </Link>
                       <div className="text-xs font-semibold text-slate-450 dark:text-slate-500 mt-1">
-                        ${item.price.toFixed(2)} each
+                        ₹{item.price.toFixed(2)} each
                       </div>
                       
                       {/* Estimate item delivery */}
@@ -270,7 +270,7 @@ const Cart = () => {
                     {/* Price total & Action Buttons */}
                     <div className="flex items-center space-x-4">
                       <span className="font-extrabold text-slate-800 dark:text-slate-100 text-base min-w-[70px] text-right">
-                        ${(item.price * item.qty).toFixed(2)}
+                        ₹{(item.price * item.qty).toFixed(2)}
                       </span>
                       
                       <div className="flex items-center gap-1.5">
@@ -326,7 +326,7 @@ const Cart = () => {
 
                     <div className="flex-grow min-w-0 text-xs">
                       <h4 className="font-bold text-slate-800 dark:text-slate-150 truncate pr-4">{item.name}</h4>
-                      <p className="text-slate-500 dark:text-slate-400 font-semibold mt-1">${item.price.toFixed(2)}</p>
+                      <p className="text-slate-500 dark:text-slate-400 font-semibold mt-1">₹{item.price.toFixed(2)}</p>
                       
                       <button
                         onClick={() => handleMoveToCart(item)}
@@ -356,7 +356,7 @@ const Cart = () => {
                     </Link>
                     <div>
                       <h4 className="font-extrabold text-slate-800 dark:text-slate-150 truncate leading-snug">{p.name}</h4>
-                      <p className="text-slate-800 dark:text-slate-200 font-black mt-1">${p.price.toFixed(2)}</p>
+                      <p className="text-slate-800 dark:text-slate-200 font-black mt-1">₹{p.price.toFixed(2)}</p>
                     </div>
                     <button
                       onClick={() => {
@@ -414,7 +414,7 @@ const Cart = () => {
               <div className="bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 border border-emerald-150 dark:border-emerald-900/35 p-3 rounded-xl flex items-center justify-between text-xs font-semibold">
                 <div className="space-y-0.5">
                   <p className="font-extrabold uppercase">Coupon Applied: {appliedCoupon.code}</p>
-                  <p className="text-[10px] text-emerald-600">Saved: -${appliedCoupon.discountAmount?.toFixed(2)}</p>
+                  <p className="text-[10px] text-emerald-600">Saved: -₹{appliedCoupon.discountAmount?.toFixed(2)}</p>
                 </div>
                 <button
                   type="button"
@@ -445,14 +445,14 @@ const Cart = () => {
               {appliedCoupon && (
                 <div className="flex justify-between text-emerald-600">
                   <span>Coupon discount ({appliedCoupon.code})</span>
-                  <span>-${appliedCoupon.discountAmount?.toFixed(2)}</span>
+                  <span>-₹{appliedCoupon.discountAmount?.toFixed(2)}</span>
                 </div>
               )}
 
               <div className="border-t border-slate-100 dark:border-slate-750 pt-4 flex justify-between items-center text-sm">
                 <span className="text-slate-800 dark:text-slate-100 font-bold">Estimated Total</span>
                 <span className="text-2xl font-black text-indigo-650 dark:text-indigo-400">
-                  ${(totalPrice - (appliedCoupon?.discountAmount || 0)).toFixed(2)}
+                  ₹{(totalPrice - (appliedCoupon?.discountAmount || 0)).toFixed(2)}
                 </span>
               </div>
             </div>

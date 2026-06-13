@@ -164,7 +164,7 @@ const Wishlist = () => {
                   </div>
 
                   <p className="text-slate-800 dark:text-slate-150 font-extrabold text-base mb-5 mt-auto">
-                    ${item.price.toFixed(2)}
+                    ₹{item.price.toFixed(2)}
                   </p>
 
                   {/* Actions */}

@@ -103,7 +103,7 @@ const validateCoupon = async (req, res) => {
     // Check min purchase
     if (cartTotal < coupon.minPurchaseAmount) {
       return res.status(400).json({
-        message: `Minimum purchase amount of $${coupon.minPurchaseAmount} is required for this coupon.`
+        message: `Minimum purchase amount of ₹${coupon.minPurchaseAmount} is required for this coupon.`
       });
     }
 

@@ -168,11 +168,11 @@ const ProductCard = ({ product, onWishlistUpdate }) => {
         <div className="flex items-center justify-between mt-auto">
           <div className="flex items-baseline space-x-2">
             <span className="text-slate-800 dark:text-slate-100 font-extrabold text-lg">
-              ${product.price.toFixed(2)}
+              ₹{product.price.toFixed(2)}
             </span>
             {product.discountPercent > 0 && (
               <span className="text-slate-400 dark:text-slate-500 line-through text-xs font-semibold">
-                ${product.originalPrice?.toFixed(2)}
+                ₹{product.originalPrice?.toFixed(2)}
               </span>
             )}
           </div>
