@@ -180,7 +180,7 @@ const addUserAddress = async (req, res) => {
     const { label, name, street, city, postalCode, country } = req.body;
     user.addresses.push({ label, name, street, city, postalCode, country });
     const updatedUser = await user.save();
-    res.status(251).json(updatedUser.addresses);
+    res.status(201).json(updatedUser.addresses);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

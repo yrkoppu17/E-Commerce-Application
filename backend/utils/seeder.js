@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import bcrypt from 'bcryptjs';
 import User from '../models/User.js';
 import Product from '../models/Product.js';
 import Order from '../models/Order.js';
@@ -55,7 +56,16 @@ const importData = async () => {
     await Review.deleteMany();
     await Coupon.deleteMany();
 
-    const createdUsers = await User.insertMany(usersData);
+    const hashedUsers = await Promise.all(
+      usersData.map(async (user) => {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(user.password, salt);
+        return { ...user, password: hashedPassword };
+      })
+    );
+
+    const createdUsers = await User.insertMany(hashedUsers);
+
     console.log('Users Seeded!');
     const adminId = createdUsers[0]._id;
     const johnId = createdUsers[1]._id;

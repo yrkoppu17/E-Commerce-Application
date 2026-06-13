@@ -51,10 +51,31 @@ const getCategoryAnalytics = async (req, res) => {
     const orders = await Order.find({ paymentStatus: 'Paid' });
     const categoryBreakdown = {};
 
+    // Collect all unique product IDs from paid orders
+    const productIdsSet = new Set();
+    orders.forEach((order) => {
+      order.orderItems.forEach((item) => {
+        if (item.product) {
+          productIdsSet.add(item.product.toString());
+        }
+      });
+    });
+
+    const productIds = Array.from(productIdsSet);
+
+    // Fetch categories for all products in a single batch query
+    const products = await Product.find({ _id: { $in: productIds } }).select('category');
+
+    // Create product-to-category map
+    const productCategoryMap = {};
+    products.forEach((p) => {
+      productCategoryMap[p._id.toString()] = p.category;
+    });
+
     for (const order of orders) {
       for (const item of order.orderItems) {
-        const product = await Product.findById(item.product);
-        const categoryName = product ? product.category : 'Unknown';
+        const prodId = item.product ? item.product.toString() : '';
+        const categoryName = productCategoryMap[prodId] || 'Unknown';
         const saleAmount = item.price * item.qty;
         
         categoryBreakdown[categoryName] = parseFloat(

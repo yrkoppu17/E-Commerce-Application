@@ -10,8 +10,9 @@ const getProducts = async (req, res) => {
 
     // 1. Keyword search (with simple regex)
     if (req.query.keyword) {
+      const escapedKeyword = req.query.keyword.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
       queryObj.name = {
-        $regex: req.query.keyword,
+        $regex: escapedKeyword,
         $options: 'i',
       };
     }
