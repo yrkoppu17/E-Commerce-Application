@@ -136,13 +136,16 @@ E-Commerce Application/
 │       ├── App.jsx              # Root route tree
 │       └── main.jsx             # ReactDOM bootstrap
 │
-└── docs/                        # 📚 Phase-Wise Project Documentation
-    ├── 1_Brainstorming_and_Ideation.md
-    ├── 2_Requirement_Analysis.md
-    ├── 3_Project_Design.md
-    ├── 4_Project_Planning.md
-    ├── 5_UAT_Testing.md
-    └── 6_FSD_Project_Documentation.md
+└── document/                    # 📚 Generated PDF Project Documentation
+    ├── 1_Brainstorming_and_Ideation.pdf
+    ├── 2_Requirement_Analysis.pdf
+    ├── 3_Project_Design.pdf
+    ├── 4_Project_Planning.pdf
+    ├── 5_UAT_Testing.pdf
+    ├── 6_FSD_Project_Documentation.pdf
+    ├── Frontend_README.pdf
+    ├── Project_README.pdf
+    └── Project_Walkthrough.pdf
 ```
 
 ---
@@ -239,22 +242,25 @@ All routes are served from `http://localhost:5000`. Protected routes require `Au
 | `/api/analytics` | Sales, revenue, user growth metrics for Admin Dashboard |
 | `/api/payment/create-intent` | Mock Stripe payment intent generation |
 
-> 📖 See the full API table with methods and auth requirements in [docs/6_FSD_Project_Documentation.md](docs/6_FSD_Project_Documentation.md#8-restful-api-documentation)
+> 📖 See the full API table with methods and auth requirements in [document/6_FSD_Project_Documentation.pdf](document/6_FSD_Project_Documentation.pdf)
 
 ---
 
-## 📚 Phase-Wise Documentation
+## 📚 Project Documentation (PDFs)
 
-The complete SDLC documentation follows the structure from the reference repository:
+All the project documentation has been compiled into professional PDF manuals and stored in the [document/](document/) folder:
 
-| Phase | Document | Description |
+| Category | Document | Description |
 | :---: | :--- | :--- |
-| **1** | [Brainstorming & Ideation](docs/1_Brainstorming_and_Ideation.md) | Problem statements, idea listing, MoSCoW priority matrix |
-| **2** | [Requirement Analysis](docs/2_Requirement_Analysis.md) | User personas, empathy maps, functional & non-functional requirements |
-| **3** | [Project Design](docs/3_Project_Design.md) | Problem-solution fit, MVC architecture, DFD Level 0 & Level 1 |
-| **4** | [Project Planning](docs/4_Project_Planning.md) | Agile product backlog, user stories, sprint schedules, velocity |
-| **5** | [UAT Testing](docs/5_UAT_Testing.md) | Full user acceptance test cases with expected results |
-| **6** | [FSD Project Documentation](docs/6_FSD_Project_Documentation.md) | Setup guide, folder structure, full API reference, security model |
+| **Phase 1** | [Brainstorming & Ideation (PDF)](document/1_Brainstorming_and_Ideation.pdf) | Problem statements, idea listing, MoSCoW priority matrix |
+| **Phase 2** | [Requirement Analysis (PDF)](document/2_Requirement_Analysis.pdf) | User personas, empathy maps, functional & non-functional requirements |
+| **Phase 3** | [Project Design (PDF)](document/3_Project_Design.pdf) | Problem-solution fit, MVC architecture, DFD Level 0 & Level 1 |
+| **Phase 4** | [Project Planning (PDF)](document/4_Project_Planning.pdf) | Agile product backlog, user stories, sprint schedules, velocity |
+| **Phase 5** | [UAT Testing (PDF)](document/5_UAT_Testing.pdf) | Full user acceptance test cases with expected results |
+| **Phase 6** | [FSD Project Documentation (PDF)](document/6_FSD_Project_Documentation.pdf) | Setup guide, folder structure, full API reference, security model |
+| **Walkthrough** | [Project Walkthrough (PDF)](document/Project_Walkthrough.pdf) | Detailed walkthrough of the implemented feature flows |
+| **Readme** | [Project README (PDF)](document/Project_README.pdf) | PDF version of the main README guide |
+| **Frontend** | [Frontend README (PDF)](document/Frontend_README.pdf) | Subdirectory README explaining React architecture |
 
 ---
 

@@ -238,38 +238,59 @@ def main():
     docs_dir   = os.path.join(script_dir, "docs")
     pdf_dir    = os.path.join(docs_dir, "pdf")
 
-    if not os.path.isdir(docs_dir):
-        print(f"[ERROR] docs/ folder not found at: {docs_dir}")
-        sys.exit(1)
-
     os.makedirs(pdf_dir, exist_ok=True)
 
-    md_files = sorted(
-        f for f in os.listdir(docs_dir)
-        if f.lower().endswith(".md")
-    )
+    files_to_convert = []
 
-    if not md_files:
-        print("[WARN] No .md files found in docs/")
+    # Walk the directory structure
+    for root, dirs, files in os.walk(script_dir):
+        # Skip node_modules and .git folders
+        if "node_modules" in root or ".git" in root:
+            continue
+        # Skip the output pdf directory itself to avoid processing temporary files
+        if pdf_dir in root:
+            continue
+
+        for filename in files:
+            if filename.lower().endswith(".md"):
+                md_path = os.path.join(root, filename)
+                
+                # Determine output PDF name to avoid collision
+                # E.g. root README.md -> Project_README.pdf, frontend/README.md -> Frontend_README.pdf
+                rel_path = os.path.relpath(md_path, script_dir)
+                if rel_path == "README.md":
+                    pdf_name = "Project_README.pdf"
+                elif rel_path == "walkthrough.md":
+                    pdf_name = "Project_Walkthrough.pdf"
+                elif rel_path == os.path.join("frontend", "README.md"):
+                    pdf_name = "Frontend_README.pdf"
+                else:
+                    # Keep its original base name but output to pdf/
+                    pdf_name = os.path.splitext(filename)[0] + ".pdf"
+
+                files_to_convert.append((md_path, pdf_name))
+
+    # Sort files by output name for neatness
+    files_to_convert.sort(key=lambda x: x[1])
+
+    if not files_to_convert:
+        print("[WARN] No markdown files found to convert")
         sys.exit(0)
 
-    print(f"\n[INFO] Converting {len(md_files)} Markdown file(s) -> PDF\n")
-    print(f"   Source : {docs_dir}")
-    print(f"   Output : {pdf_dir}\n")
+    print(f"\n[INFO] Converting {len(files_to_convert)} Markdown file(s) -> PDF\n")
+    print(f"   Output Folder: {pdf_dir}\n")
 
     errors = []
-    for filename in md_files:
-        md_path  = os.path.join(docs_dir, filename)
-        pdf_name = os.path.splitext(filename)[0] + ".pdf"
+    for md_path, pdf_name in files_to_convert:
         pdf_path = os.path.join(pdf_dir, pdf_name)
         try:
             md_to_pdf_xhtml2pdf(md_path, pdf_path)
         except Exception as e:
-            print(f"  [FAILED] {filename} -> FAILED: {e}")
-            errors.append(filename)
+            print(f"  [FAILED] {os.path.basename(md_path)} -> FAILED: {e}")
+            errors.append(os.path.basename(md_path))
 
     print(f"\n{'-'*55}")
-    print(f"[SUMMARY] Done! {len(md_files) - len(errors)}/{len(md_files)} PDFs generated in docs/pdf/")
+    print(f"[SUMMARY] Done! {len(files_to_convert) - len(errors)}/{len(files_to_convert)} PDFs generated in docs/pdf/")
     if errors:
         print(f"[SUMMARY] Failed: {', '.join(errors)}")
     print(f"{'-'*55}\n")
